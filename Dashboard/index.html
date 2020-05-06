@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Carona Virus Data Visualization</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <!--<link href="img/favicon.png" rel="icon">-->
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Roboto:100,300,400,500,700|Philosopher:400,400i,700,700i" rel="stylesheet">
+
+  <!-- Bootstrap css -->
+  <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
+  <link href="lib/bootstrap/css1/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/modal-video/css/modal-video.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+  <!--<script type="text/javascript" src="js/Constituency.js""></script>-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="plotly-latest.min.js"></script>
+  
+
+  <script>
+function plotchange(){
+    var type=document.getElementById('selectGraph').value;
+	console.log(type);
+     $.ajax({
+          type:"GET",
+          url:"Total.csv",
+          dataType:"text",
+          success: function(data) {
+		  
+		  refinedata=data.split(/\r\n|\n/);
+		  Totalcases=0;
+		  Curedcases=0;
+		  Deathcases=0;
+		  console.log(refinedata.length);
+		  for(i=0;i<refinedata.length-1;i++){
+		    var refined =refinedata[i].split(',');
+			Totalcases=refined[1];
+			Curedcases=refined[2];
+			Deathcases=refined[3];
+			console.log(refined[0]);
+			console.log(Totalcases);
+			console.log(Curedcases);
+			console.log(Deathcases);
+		  
+		  }
+		  if(type=="bar"){
+		  console.log("bar");
+		  var data = [{
+					  type: type,
+					  y: [Totalcases,Curedcases,Deathcases],
+					  x: ["Totalcases", "Curedcases", "Deathcases"],
+					}]
+		  var layout = {
+				  title:"Number of people effected by COVID-19",
+				  xaxis:{
+				      title: 'Category'
+				  },
+				  yaxis: {
+                         title: 'frequency (No. of  people)'
+						 },
+				  height: 500,
+				  width: 500
+				};
+
+
+			Plotly.newPlot('myDiv7', data,layout,{displayModeBar: false});
+
+		  
+            
+          }
+		  if(type=="pie"){
+				var data = [{
+				  values: [Totalcases,Curedcases,Deathcases],
+				  labels: ["Totalcases", "Curedcases", "Deathcases"],
+				  type: type,
+				  textinfo: "label+percent"
+				}];
+
+				var layout = {
+				  title: 'Number of people effected by COVID-19 in Percentage',
+				  height: 400,
+				  width: 500
+				};
+
+				Plotly.newPlot('myDiv7', data, layout,{displayModeBar: false});
+		  
+		  }
+		  }
+        });
+  }
+  
+  
+  function plotchange1(){
+	var type=document.getElementById('selectGraph1').value;
+     $.ajax({
+          type:"GET",
+          url:"Data.csv",
+          dataType:"text",
+          success: function(data) {
+		  
+		  refinedata=data.split(/\r\n|\n/);
+		  states=[];
+		  Totalcases=[];
+		  Curedcases=[];
+		  Deathcases=[];
+		  console.log(refinedata.length);
+		  for(i=0;i<refinedata.length;i++){
+			if(i>0){
+				var refined =refinedata[i].split(',');
+				states.push(refined[0]);
+				Totalcases.push(refined[1]);
+				Curedcases.push(refined[2]);
+				Deathcases.push(refined[3]);
+				console.log(refined[0]);
+				console.log(Totalcases);
+				console.log(Curedcases);
+				console.log(Deathcases);
+				console.log(i);
+				}
+		  
+		  }
+		  
+			
+			if(type=='groupbar'){
+			
+			var trace1 = {
+			  x: states,
+			  y: Totalcases,
+			  type: 'bar',
+			  name: 'Totalcases',
+			  marker: {
+				color: 'rgb(49,130,189)'
+			  }
+			  
+			};
+		  var trace2 = {
+			  x: states,
+			  y: Curedcases,
+			  type: 'bar',
+			  name: 'Curedcases',
+			  marker: {
+				color: 'rgb(51, 204, 51)'
+			  }
+			};
+			var trace3 = {
+			  x: states,
+			  y: Deathcases,
+			  type: 'bar',
+			  name: 'Deathcases',
+			  marker: {
+				color: 'rgb(255, 0, 0)'
+			  }
+			};
+			
+			var data = [trace1, trace2 ,trace3];
+				var layout = {
+				  title: 'All states COVID-19 Report',
+				  xaxis: {
+					tickangle: -30
+				  },
+				  barmode: 'group'
+			};
+			
+			Plotly.newPlot('myDiv6', data, layout);
+			
+			
+			
+			
+			}
+			
+			if(type=='stackbar'){
+			var trace1 = {
+			  y: states,
+			  x: Totalcases,
+			  type: 'bar',
+			  name: 'Totalcases',
+			  marker: {
+				color: 'rgb(49,130,189)'
+			  },
+			  orientation: 'h'
+			  
+			};
+		  var trace2 = {
+			  y: states,
+			  x: Curedcases,
+			  type: 'bar',
+			  name: 'Curedcases',
+			  marker: {
+				color: 'rgb(51, 204, 51)'
+			  },
+			  orientation: 'h'
+			};
+			var trace3 = {
+			  y: states,
+			  x: Deathcases,
+			  type: 'bar',
+			  name: 'Deathcases',
+			  marker: {
+				color: 'rgb(255, 0, 0)'
+			  },
+			  orientation: 'h'
+			};
+			
+			var data = [trace1, trace2 ,trace3];
+			var layout = {
+			  title: 'All states COVID-19 Report',
+			  barmode: 'stack',
+			  height:900
+			};
+			
+			Plotly.newPlot('myDiv6', data, layout);
+  
+  }
+  
+  
+  
+  
+  
+  
+  }
+  });
+  }
+  
+  function statewise(){
+  var State=document.getElementById('S1').value;
+  var type=document.getElementById('S2').value;
+  console.log(State);
+  console.log(type);
+  
+  $.ajax({
+          type:"GET",
+          url:"Data.csv",
+          dataType:"text",
+          success: function(data) {
+		  
+		  refinedata=data.split(/\r\n|\n/);
+		  states=[];
+		 Totalcases=0;
+		  Curedcases=0;
+		  Deathcases=0;
+		  console.log(refinedata.length);
+		  for(i=0;i<refinedata.length-1;i++){
+		  if(i==State && i>0){
+		    var refined =refinedata[i].split(',');
+			Totalcases=refined[1];
+			Curedcases=refined[2];
+			Deathcases=refined[3];
+			console.log(refined[0]);
+			console.log(Totalcases);
+			console.log(Curedcases);
+			console.log(Deathcases);
+		  
+		  }
+		  }
+		    if(type=="bar"){
+		  console.log("bar");
+		  var data = [{
+					  type: type,
+					  y: [Totalcases,Curedcases,Deathcases],
+					  x: ["Totalcases", "Curedcases", "Deathcases"],
+					}]
+		  var layout = {
+				  title:"Number of people effected by COVID-19",
+				  xaxis:{
+				      title: 'Category'
+				  },
+				  yaxis: {
+                         title: 'frequency (No. of  people)'
+						 },
+				  height: 500,
+				  width: 500
+				};
+
+
+			Plotly.newPlot('myDiv5', data,layout,{displayModeBar: false});
+
+		  
+            
+          }
+		  if(type=="pie"){
+				var data = [{
+				  values: [Totalcases,Curedcases,Deathcases],
+				  labels: ["Totalcases", "Curedcases", "Deathcases"],
+				  type: type,
+				  textinfo: "label+percent"
+				}];
+
+				var layout = {
+				  title: 'Number of people effected by COVID-19 in Percentage',
+				  height: 400,
+				  width: 500
+				};
+
+				Plotly.newPlot('myDiv5', data, layout,{displayModeBar: false});
+		  
+		  }
+  
+  
+  
+  
+  }
+  });
+  
+  
+  }
+  function twostates(){
+	var State1=document.getElementById('S4').value;
+	var State2=document.getElementById('S5').value;
+	var type=document.getElementById('S6').value;
+	console.log(State1);
+	console.log(State2);
+	console.log(type);
+		$.ajax({
+          type:"GET",
+          url:"Data.csv",
+          dataType:"text",
+          success: function(data) {
+		  
+		  refinedata=data.split(/\r\n|\n/);
+		  states=[];
+		  Totalcases=[];
+		  Curedcases=[];
+		  Deathcases=[];
+		  console.log(refinedata.length);
+		  for(i=0;i<refinedata.length;i++){
+			if(i>0 && (i==State1 || i==State2) ){
+				var refined =refinedata[i].split(',');
+				states.push(refined[0]);
+				Totalcases.push(refined[1]);
+				Curedcases.push(refined[2]);
+				Deathcases.push(refined[3]);
+				console.log(refined[0]);
+				console.log(Totalcases);
+				console.log(Curedcases);
+				console.log(Deathcases);
+				console.log(i);
+				}
+		  }
+		  
+		  
+		  
+		  if(type=='bar'){
+		    var trace1 = {
+				  x: ['Totalcases', 'Curedcases', 'Deathcases'],
+				  y: [Totalcases[0],Curedcases[0],Deathcases[0]],
+				  name: states[0],
+				  type: 'bar'
+				};
+
+				var trace2 = {
+				  x: ['Totalcases', 'Curedcases', 'Deathcases'],
+				  y: [Totalcases[1],Curedcases[1],Deathcases[1]],
+				  name: states[1],
+				  type: 'bar'
+				};
+
+				var data = [trace1, trace2];
+
+				var layout = { title: 'Comparison of '+ states[0] + ' and ' +states[1],
+				        barmode: 'group'};
+
+				Plotly.newPlot('myDiv4', data, layout);
+				
+				
+
+		  }
+		  if(type=='pie')
+		  {
+			var data = [{
+			  values: [Totalcases[0],Curedcases[0],Deathcases[0]],
+			  labels: ['Totalcases','Curedcases','Deathcases'],
+			  text: states[0],
+			  textposition: 'inside', 
+			  domain: {column: 0},
+			  name: states[0],
+			  hoverinfo: 'label+percent+name',
+			  hole: .4,
+			  type: 'pie'
+			},{
+			  values: [Totalcases[1],Curedcases[1],Deathcases[1]],
+			  labels: ['Totalcases','Curedcases','Deathcases'],
+			  text: states[1],
+			  textposition: 'inside',
+			  domain: {column: 1},
+			  name: states[1],
+			  hoverinfo: 'label+percent+name',
+			  hole: .4,
+			  type: 'pie'
+			}];
+			
+			var layout = {
+				  title: 'Comparison of '+ states[0] + ' and ' +states[1],
+				  annotations: [
+					{
+					  font: {
+						size: 10
+					  },
+					  showarrow: false,
+					  text: states[0],
+					  x: 0.17,
+					  y: 0.5
+					},
+					{
+					  font: {
+						size: 10
+					  },
+					  showarrow: false,
+					  text: states[1],
+					  x: 0.82,
+					  y: 0.5
+					}
+				  ],
+				  height: 400,
+				  width: 600,
+				  showlegend: false,
+				  grid: {rows: 1, columns: 2}
+				};
+
+			Plotly.newPlot('myDiv4', data, layout);
+			
+		  }
+		  }
+		 });
+  
+  
+  
+  }
+  </script>
+ </head>
+ <body >
+
+  <header id="header" class="header header-hide" >
+    <div class="container">
+
+      <div id="logo" class="pull-left">
+        <h1><a><class="scrollto"><span>Carona virus In India<br><p style="text-align:right; font-size:9px ">USING DATA VISUALIZATION</p></span></a></h1>
+      </div>
+
+      <nav id="nav-menu-container"style="position:relative">
+        <ul class="nav-menu">
+          <li class="menu-active"><a href="#hero">Home</a></li>
+		  <li><a href="#about-us">About</a></li>
+          <li><a href="#CountryStatistics">Country Statistics</a></li>
+          <li><a href="#AllStates">All States</a></li>
+          <li><a href="#StateWise">State Wise</a></li>
+          <li><a href="#Comparing">Comparing States</a></li>
+          <li><a href="#team">Team</a></li>
+        </ul>
+      </nav><!-- #nav-menu-container -->
+	 
+	   
+    </div>
+	
+	
+  </header><!-- #header -->
+  
+  <section id="hero" class="wow fadeIn" >
+    <div class="hero-container">
+      <!--<h1>Welcome to eStartups</h1>-->
+      <!--<h2>Elegant Bootstrap Template for Startups, Apps &amp; more...</h2>
+      <img src="img/images.png" alt="Hero Imgs">-->
+	  <br>
+      <h1>CORONA VIRUS IN INDIA</h1>
+      <h2></h2>
+	  <div>
+      <!--<a href="#get-started" class="btn-get-started scrollto">Get Started</a>
+      <div class="btns">
+        <a href="#"><i class="fa fa-apple fa-3x"></i> App Store</a>
+        <a href="#"><i class="fa fa-play fa-3x"></i> Google Play</a>
+        <a href="#"><i class="fa fa-windows fa-3x"></i> windows</a>
+      </div>
+      -->
+    </div>
+  </section><!-- #hero -->
+  
+  
+  
+  <!--==========================
+    About Us Section
+  ============================-->
+  <section id="about-us" class="about-us padd-section wow fadeInUp">
+    <div class="container">
+      <!--<div class="row justify-content-center">-->
+        <div class="section-title text-center">
+          <h3>Architecture</h3><br>
+          <img src="img/Archietecture1.png" alt="About">
+        <p>
+            <center><h3>This website is to visualize the Statistics of the COVID-19 Pandemic and also Preventive Measures.</h3></center><br>
+            <ul class="list-unstyled" >
+              <li style='font-size:15px;'>&#8227; Easy to understand</li><br>
+              <li style='font-size:15px;'>&#8227; Analyzed with proper colors and different types of Graphs</li>
+            </ul>
+			</p>
+        </div>
+    </div>
+  </section>
+  
+  <!------------------------------------------
+     CountryStatistics
+	------------------------------------------> 
+  <section id="CountryStatistics" class="class">
+  <br>
+  
+  <div class="container">
+      <div class="section-title text-center">
+        <h2><b>Country Statistics</b></h2>
+        <!--<p class="separator">Integer cursus bibendum augue ac cursus .</p>-->
+        <b>Select the Type of plot</b>
+        <select name="country" onchange="plotchange()" id="selectGraph">
+        <option value="">--select--</option>
+        <option value="bar">Bar Graph</option>
+        <option value="pie">Pie Chart</option>
+        </select><br><br>
+  <div id='myDiv7' style="width: 50%;margin: auto auto;">
+          <!--<a href="#" class="js-modal-btn play-btn" data-video-id="s22ViV7tBKE"></a>-->
+        </div>
+		</section>
+		
+	<!------------------------------------------
+     All States
+	------------------------------------------> 
+	<section id="AllStates" class="class">
+  <br>
+  
+  <div class="containe">
+      <div class="section-title text-center">
+        <h2><b>All States</b></h2>
+        <!--<p class="separator">Integer cursus bibendum augue ac cursus .</p>-->
+        <b>Select the Type of plot</b>
+        <select name="AllStates" onchange="plotchange1()" id="selectGraph1">
+        <option value="">--select--</option>
+        <option value="groupbar">Vertical Bar Graph</option>
+        <option value="stackbar">Horizontal stack Chart</option>
+        </select><br><br>
+  <div id='myDiv6'style="width: 80%;margin: auto auto;">
+          <!--<a href="#" class="js-modal-btn play-btn" data-video-id="s22ViV7tBKE"></a>-->
+        </div>
+		</section>
+	
+	<!------------------------------------------
+     StateWise
+	------------------------------------------> 
+	
+	<section id="StateWise" class="class">
+  <br>
+  
+  <div class="container">
+      <div class="section-title text-center">
+        <h2><b>State Wise</b></h2>
+		<form action="#"  name="form1" method="GET" id="form">
+        <b>Select State</b>
+		<select name="s1" id="S1">
+			<option value="--select--">--select--</option>
+			<option value="1">Andaman and Nicobar Islands</option>
+			<option value="2">Andhra Pradesh</option>
+			<option value="3">Arunachal Pradesh</option>
+			<option value="4">Assam</option>
+			<option value="5">Bihar</option>
+			<option value="6">Chandigarh</option>
+			<option value="7">Chhattisgarh</option>
+			<option value="8">Dadar Nagar Haveli</option>
+			<option value="9">Delhi</option>
+			<option value="10">Goa</option>
+			<option value="11">Gujarat</option>
+			<option value="12">Haryana</option>
+			<option value="13">Himachal Pradesh</option>
+			<option value="14">Jammu and Kashmir</option>
+			<option value="15">Jharkhand</option>
+			<option value="16">Karnataka</option>
+			<option value="17">Kerala</option>
+			<option value="18">Ladakh</option>
+			<option value="19">Madhya Pradesh</option>
+			<option value="20">Maharashtra</option>
+			<option value="21">Manipur</option>
+			<option value="22">Meghalaya</option>
+			<option value="23">Mizoram</option>
+			<option value="24">Odisha</option>
+			<option value="25">Puducherry</option>
+			<option value="26">Punjab</option>
+			<option value="27">Rajasthan</option>
+			<option value="28">Tamil Nadu</option>
+			<option value="29">Telangana</option>
+			<option value="30">Tripura</option>
+			<option value="31">Uttarakhand</option>
+			<option value="32">Uttar Pradesh</option>
+			<option value="33">West Bengal</option>
+			
+		</select>
+		<b>Select the Type of Plot</b>
+		<select name="s2" id="S2">
+			<option value="--select--">--select--</option>
+			<option value="bar">Bar Graph</option>
+        <option value="pie">Pie Chart</option>
+			</select>
+		<input type="button" name="submit" id="btn" value="Submit" onclick="statewise()"/>	
+        
+        
+</form>
+        
+  <div id='myDiv5'style="width: 60%;margin: auto auto;">
+          <!--<a href="#" class="js-modal-btn play-btn" data-video-id="s22ViV7tBKE"></a>-->
+        </div>
+		</section>
+	
+	<!------------------------------------------
+     Comparing
+	------------------------------------------>
+	
+	<section id="Comparing" class="class1">
+  <br>
+  
+  <div class="container">
+      <div class="section-title text-center">
+        <h2><b>Comparing States</b></h2>
+		<form action="#"  name="form1" method="GET" id="form">
+        <b>Select State</b>
+		<select name="s4" id="S4">
+			<option value="--select--">--select--</option>
+			<option value="1">Andaman and Nicobar Islands</option>
+			<option value="2">Andhra Pradesh</option>
+			<option value="3">Arunachal Pradesh</option>
+			<option value="4">Assam</option>
+			<option value="5">Bihar</option>
+			<option value="6">Chandigarh</option>
+			<option value="7">Chhattisgarh</option>
+			<option value="8">Dadar Nagar Haveli</option>
+			<option value="9">Delhi</option>
+			<option value="10">Goa</option>
+			<option value="11">Gujarat</option>
+			<option value="12">Haryana</option>
+			<option value="13">Himachal Pradesh</option>
+			<option value="14">Jammu and Kashmir</option>
+			<option value="15">Jharkhand</option>
+			<option value="16">Karnataka</option>
+			<option value="17">Kerala</option>
+			<option value="18">Ladakh</option>
+			<option value="19">Madhya Pradesh</option>
+			<option value="20">Maharashtra</option>
+			<option value="21">Manipur</option>
+			<option value="22">Meghalaya</option>
+			<option value="23">Mizoram</option>
+			<option value="24">Odisha</option>
+			<option value="25">Puducherry</option>
+			<option value="26">Punjab</option>
+			<option value="27">Rajasthan</option>
+			<option value="28">Tamil Nadu</option>
+			<option value="29">Telangana</option>
+			<option value="30">Tripura</option>
+			<option value="31">Uttarakhand</option>
+			<option value="32">Uttar Pradesh</option>
+			<option value="33">West Bengal</option>
+			
+		</select>
+		<b>Select another State</b>
+		<select name="s5" id="S5">
+			<option value="--select--">--select--</option>
+			<option value="1">Andaman and Nicobar Islands</option>
+			<option value="2">Andhra Pradesh</option>
+			<option value="3">Arunachal Pradesh</option>
+			<option value="4">Assam</option>
+			<option value="5">Bihar</option>
+			<option value="6">Chandigarh</option>
+			<option value="7">Chhattisgarh</option>
+			<option value="8">Dadar Nagar Haveli</option>
+			<option value="9">Delhi</option>
+			<option value="10">Goa</option>
+			<option value="11">Gujarat</option>
+			<option value="12">Haryana</option>
+			<option value="13">Himachal Pradesh</option>
+			<option value="14">Jammu and Kashmir</option>
+			<option value="15">Jharkhand</option>
+			<option value="16">Karnataka</option>
+			<option value="17">Kerala</option>
+			<option value="18">Ladakh</option>
+			<option value="19">Madhya Pradesh</option>
+			<option value="20">Maharashtra</option>
+			<option value="21">Manipur</option>
+			<option value="22">Meghalaya</option>
+			<option value="23">Mizoram</option>
+			<option value="24">Odisha</option>
+			<option value="25">Puducherry</option>
+			<option value="26">Punjab</option>
+			<option value="27">Rajasthan</option>
+			<option value="28">Tamil Nadu</option>
+			<option value="29">Telangana</option>
+			<option value="30">Tripura</option>
+			<option value="31">Uttarakhand</option>
+			<option value="32">Uttar Pradesh</option>
+			<option value="33">West Bengal</option>
+			
+		</select>
+		<b>Select the Type of Plot</b>
+		<select name="s6" id="S6">
+			<option value="--select--">--select--</option>
+			<option value="bar">Bar Graph</option>
+        <option value="pie">Pie Chart</option>
+			</select>
+		<input type="button" name="submit" id="btn" value="Submit" onclick="twostates()"/>	
+        
+        
+</form>
+        
+  <div id='myDiv4'style="width: 60%;margin: auto auto;">
+          <!--<a href="#" class="js-modal-btn play-btn" data-video-id="s22ViV7tBKE"></a>-->
+        </div>
+		</section>
+	
+		
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/jquery/jquery-migrate.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/superfish/hoverIntent.js"></script>
+  <script src="lib/superfish/superfish.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/modal-video/js/modal-video.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <!-- Contact Form JavaScript File -->
+  <script src="contactform/contactform.js"></script>
+
+  <!-- Template Main Javascript File -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>
