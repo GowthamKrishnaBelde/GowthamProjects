@@ -1,34 +1,36 @@
-State / UT,Totalcases,Curedcases,Deathcases
-Andaman and Nicobar Islands,33,32,0
-Andhra Pradesh,1717,589,36
-Arunachal Pradesh,1,1,0
-Assam,43,32,1
-Bihar,536,142,4
-Chandigarh,111,21,1
-Chhattisgarh,59,36,0
-Dadar Nagar Haveli,1,0,0
-Delhi,5104,1468,64
-Goa,7,7,0
-Gujarat,6245,1381,368
-Haryana,548,256,6
-Himachal Pradesh,42,38,2
-Jammu and Kashmir,741,320,8
-Jharkhand,125,33,3
-Karnataka,671,331,29
-Kerala,502,462,4
-Ladakh,41,17,0
-Madhya Pradesh,3049,1000,176
-Maharashtra,15525,2819,617
-Manipur,2,2,0
-Meghalaya,12,10,1
-Mizoram,1,0,0
-Odisha,175,60,1
-Puducherry,9,6,0
-Punjab,1451,133,25
-Rajasthan,3158,1525,89
-Tamil Nadu,4058,1485,33
-Telengana,1096,585,29
-Tripura,43,2,0
-Uttarakhand,61,39,1
-Uttar Pradesh,2880,987,56
-West Bengal,1344,364,140
+State / UT,Totalcases,Curedcases,Deathcases,Activecases
+Andaman and Nicobar Islands,38,33,0,5
+Andhra Pradesh,5429,3048,80,2301
+Arunachal Pradesh,61,4,0,57
+Assam,3319,1432,6,1881
+Bihar,5983,3266,36,2681
+Chandigarh,332,286,5,41
+Chhattisgarh,1398,447,6,945
+Dadra and Nagar Haveli and Daman and Diu,30,2,0,28
+Delhi,34687,12731,1085,20871
+Goa,417,67,0,350
+Gujarat,22032,15101,1385,5546
+Haryana,5968,2260,64,3644
+Himachal Pradesh,470,280,6,184
+Jammu and Kashmir,4574,1820,52,2702
+Jharkhand,1599,630,8,961
+Karnataka,6245,2977,72,3196
+Kerala,2244,968,18,1258
+Ladakh,135,54,1,80
+Madhya Pradesh,10241,7042,431,2768
+Maharashtra,97648,46078,3590,47980
+Manipur,366,73,0,293
+Meghalaya,44,18,1,25
+Mizoram,102,1,0,101
+Nagaland,128,22,0,106
+Odisha,3386,2354,9,1023
+Puducherry,157,67,2,88
+Punjab,2887,2259,59,569
+Rajasthan,11838,8775,265,2798
+Sikkim,14,2,0,12
+Tamil Nadu,38716,20705,349,17662
+Telangana,4320,1993,165,2162
+Tripura,913,278,1,634
+Uttarakhand,1643,842,15,786
+Uttar Pradesh,12088,7292,345,4451
+West Bengal,9768,3988,442,5338

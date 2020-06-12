@@ -46,24 +46,27 @@ function plotchange(){
 		  Totalcases=0;
 		  Curedcases=0;
 		  Deathcases=0;
+		  Activecases=0;
 		  console.log(refinedata.length);
 		  for(i=0;i<refinedata.length-1;i++){
 		    var refined =refinedata[i].split(',');
 			Totalcases=refined[1];
 			Curedcases=refined[2];
 			Deathcases=refined[3];
+			Activecases=refined[4];
 			console.log(refined[0]);
 			console.log(Totalcases);
 			console.log(Curedcases);
 			console.log(Deathcases);
+			console.log(Activecases);
 		  
 		  }
 		  if(type=="bar"){
 		  console.log("bar");
 		  var data = [{
 					  type: type,
-					  y: [Totalcases,Curedcases,Deathcases],
-					  x: ["Totalcases", "Curedcases", "Deathcases"],
+					  y: [Activecases,Totalcases,Curedcases,Deathcases],
+					  x: ["Activecases","Totalcases", "Curedcases", "Deathcases"],
 					}]
 		  var layout = {
 				  title:"Number of people effected by COVID-19",
@@ -85,8 +88,8 @@ function plotchange(){
           }
 		  if(type=="pie"){
 				var data = [{
-				  values: [Totalcases,Curedcases,Deathcases],
-				  labels: ["Totalcases", "Curedcases", "Deathcases"],
+				  values: [Activecases,Totalcases,Curedcases,Deathcases],
+				  labels: ["Activecases","Totalcases", "Curedcases", "Deathcases"],
 				  type: type,
 				  textinfo: "label+percent"
 				}];
@@ -118,6 +121,7 @@ function plotchange(){
 		  Totalcases=[];
 		  Curedcases=[];
 		  Deathcases=[];
+		  Activecases=[];
 		  console.log(refinedata.length);
 		  for(i=0;i<refinedata.length;i++){
 			if(i>0){
@@ -126,10 +130,12 @@ function plotchange(){
 				Totalcases.push(refined[1]);
 				Curedcases.push(refined[2]);
 				Deathcases.push(refined[3]);
+				Activecases.push(refined[4]);
 				console.log(refined[0]);
 				console.log(Totalcases);
 				console.log(Curedcases);
 				console.log(Deathcases);
+				console.log(Activecases);
 				console.log(i);
 				}
 		  
@@ -154,7 +160,7 @@ function plotchange(){
 			  type: 'bar',
 			  name: 'Curedcases',
 			  marker: {
-				color: 'rgb(51, 204, 51)'
+				color: 'rgb(245, 141, 66)'
 			  }
 			};
 			var trace3 = {
@@ -167,7 +173,17 @@ function plotchange(){
 			  }
 			};
 			
-			var data = [trace1, trace2 ,trace3];
+			var trace4 = {
+				x:states,
+				y:Activecases,
+				type:'bar',
+				name:'Activecases',
+				marker: {
+					color: 'rgb(21, 176, 4)'
+				}
+			};
+			
+			var data = [trace1, trace2 ,trace3,trace4];
 				var layout = {
 				  title: 'All states COVID-19 Report',
 				  xaxis: {
@@ -201,7 +217,7 @@ function plotchange(){
 			  type: 'bar',
 			  name: 'Curedcases',
 			  marker: {
-				color: 'rgb(51, 204, 51)'
+				color: 'rgb(245, 141, 66)'
 			  },
 			  orientation: 'h'
 			};
@@ -215,8 +231,17 @@ function plotchange(){
 			  },
 			  orientation: 'h'
 			};
+			var trace4 = {
+				y:states,
+				x:Activecases,
+				type:'bar',
+				name:'Activecases',
+				marker: {
+					color: 'rgb(21, 176, 4)'
+				}
+			};
 			
-			var data = [trace1, trace2 ,trace3];
+			var data = [trace1, trace2 ,trace3, trace4];
 			var layout = {
 			  title: 'All states COVID-19 Report',
 			  barmode: 'stack',
@@ -253,6 +278,7 @@ function plotchange(){
 		 Totalcases=0;
 		  Curedcases=0;
 		  Deathcases=0;
+		  Activecases=0;
 		  console.log(refinedata.length);
 		  for(i=0;i<refinedata.length-1;i++){
 		  if(i==State && i>0){
@@ -260,10 +286,12 @@ function plotchange(){
 			Totalcases=refined[1];
 			Curedcases=refined[2];
 			Deathcases=refined[3];
+			Activecases = refined[4];
 			console.log(refined[0]);
 			console.log(Totalcases);
 			console.log(Curedcases);
 			console.log(Deathcases);
+			console.log(Activecases);
 		  
 		  }
 		  }
@@ -271,8 +299,8 @@ function plotchange(){
 		  console.log("bar");
 		  var data = [{
 					  type: type,
-					  y: [Totalcases,Curedcases,Deathcases],
-					  x: ["Totalcases", "Curedcases", "Deathcases"],
+					  y: [Totalcases,Curedcases,Deathcases,Activecases],
+					  x: ["Totalcases", "Curedcases", "Deathcases","Activecases"],
 					}]
 		  var layout = {
 				  title:"Number of people effected by COVID-19",
@@ -294,8 +322,8 @@ function plotchange(){
           }
 		  if(type=="pie"){
 				var data = [{
-				  values: [Totalcases,Curedcases,Deathcases],
-				  labels: ["Totalcases", "Curedcases", "Deathcases"],
+				  values: [Totalcases,Curedcases,Deathcases,Activecases],
+				  labels: ["Totalcases", "Curedcases", "Deathcases","Activecases"],
 				  type: type,
 				  textinfo: "label+percent"
 				}];
@@ -336,6 +364,7 @@ function plotchange(){
 		  Totalcases=[];
 		  Curedcases=[];
 		  Deathcases=[];
+		  Activecases=[];
 		  console.log(refinedata.length);
 		  for(i=0;i<refinedata.length;i++){
 			if(i>0 && (i==State1 || i==State2) ){
@@ -344,10 +373,12 @@ function plotchange(){
 				Totalcases.push(refined[1]);
 				Curedcases.push(refined[2]);
 				Deathcases.push(refined[3]);
+				Activecases.push(refined[4]);
 				console.log(refined[0]);
 				console.log(Totalcases);
 				console.log(Curedcases);
 				console.log(Deathcases);
+				console.log(Activecases);
 				console.log(i);
 				}
 		  }
@@ -356,15 +387,15 @@ function plotchange(){
 		  
 		  if(type=='bar'){
 		    var trace1 = {
-				  x: ['Totalcases', 'Curedcases', 'Deathcases'],
-				  y: [Totalcases[0],Curedcases[0],Deathcases[0]],
+				  x: ['Totalcases', 'Curedcases', 'Deathcases','Activecases'],
+				  y: [Totalcases[0],Curedcases[0],Deathcases[0],Activecases[0]],
 				  name: states[0],
 				  type: 'bar'
 				};
 
 				var trace2 = {
-				  x: ['Totalcases', 'Curedcases', 'Deathcases'],
-				  y: [Totalcases[1],Curedcases[1],Deathcases[1]],
+				  x: ['Totalcases', 'Curedcases', 'Deathcases','Activecases'],
+				  y: [Totalcases[1],Curedcases[1],Deathcases[1],Activecases[1]],
 				  name: states[1],
 				  type: 'bar'
 				};
@@ -382,8 +413,8 @@ function plotchange(){
 		  if(type=='pie')
 		  {
 			var data = [{
-			  values: [Totalcases[0],Curedcases[0],Deathcases[0]],
-			  labels: ['Totalcases','Curedcases','Deathcases'],
+			  values: [Totalcases[0],Curedcases[0],Deathcases[0],Activecases[0]],
+			  labels: ['Totalcases','Curedcases','Deathcases','Activecases'],
 			  text: states[0],
 			  textposition: 'inside', 
 			  domain: {column: 0},
@@ -392,8 +423,8 @@ function plotchange(){
 			  hole: .4,
 			  type: 'pie'
 			},{
-			  values: [Totalcases[1],Curedcases[1],Deathcases[1]],
-			  labels: ['Totalcases','Curedcases','Deathcases'],
+			  values: [Totalcases[1],Curedcases[1],Deathcases[1],Activecases[1]],
+			  labels: ['Totalcases','Curedcases','Deathcases','Activecases'],
 			  text: states[1],
 			  textposition: 'inside',
 			  domain: {column: 1},
@@ -475,7 +506,7 @@ function plotchange(){
       <!--<h2>Elegant Bootstrap Template for Startups, Apps &amp; more...</h2>
       <img src="img/images.png" alt="Hero Imgs">-->
 	  <br>
-      <h1>CORONA VIRUS IN INDIA</h1>
+      <h1>CARONA VIRUS IN INDIA</h1>
       <h2></h2>
 	  <div>
       <!--<a href="#get-started" class="btn-get-started scrollto">Get Started</a>
